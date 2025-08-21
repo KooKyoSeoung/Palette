@@ -5,6 +5,9 @@ using TMPro;
 
 public class TutorialText : MonoBehaviour
 {
+    const float MIN_DIST = 6.0f;
+    const float REF_DIST = 15.0f;
+
     private TextMeshPro text;
 
     private Transform playerTransform;
@@ -27,11 +30,11 @@ public class TutorialText : MonoBehaviour
         {
             playerDistance = Vector2.Distance(gameObject.transform.position, playerTransform.position);
 
-            if (playerDistance < 10.0f)
+            if (playerDistance < MIN_DIST)
                 text.color = new Color(0, 0, 0, 1);
             else
             {
-                textAlpha = (20.0f - playerDistance) / 10.0f;
+                textAlpha = (REF_DIST - playerDistance) / 10.0f;
                 text.color = new Color(0, 0, 0, textAlpha);
             }
         }
