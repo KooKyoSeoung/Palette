@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class Manager : MonoBehaviour
 {
+    [SerializeField] private SoundManager sound;
+
     static Manager sInstance;
     static Manager Instance
     {
@@ -16,6 +18,7 @@ public class Manager : MonoBehaviour
     }
 
     public static InputManager Input { get { return Instance.input; } }
+    public static SoundManager Sound { get { return Instance.sound; } }
 
     InputManager input = new InputManager();
 
