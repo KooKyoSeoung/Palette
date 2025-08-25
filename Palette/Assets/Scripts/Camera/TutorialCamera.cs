@@ -5,6 +5,8 @@ using UnityEngine;
 public class TutorialCamera : MonoBehaviour
 {
     [SerializeField] private float leftEndSize = 11f;
+    public bool isSubStageMove = false;
+
     private float rightEndSize;
     public float RightEndSize 
     { 
@@ -29,7 +31,8 @@ public class TutorialCamera : MonoBehaviour
 
     void FixedUpdate()
     {
-        CameraMovement();
+        if (!isSubStageMove)
+            CameraMovement();
     }
 
     private void CameraMovement()

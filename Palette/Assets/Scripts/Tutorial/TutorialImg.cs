@@ -1,29 +1,26 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using TMPro;
 
-public class TutorialText : MonoBehaviour
+public class TutorialImg : MonoBehaviour
 {
     const float MIN_DIST = 6.0f;
     const float REF_DIST = 15.0f;
 
-    [SerializeField] [Range(0, 1)] private int color;
-
-    private TextMeshPro text;
+    private SpriteRenderer sprite;
 
     private Transform playerTransform;
     private float playerDistance;
 
-    private float textAlpha;
+    private float spriteAlpha;
 
     void Start()
     {
         playerTransform = GameObject.FindWithTag("Player").GetComponent<Transform>();
 
-        text = gameObject.GetComponent<TextMeshPro>();
+        sprite = gameObject.GetComponent<SpriteRenderer>();
 
-        text.color = new Color(color, color, color, 0);
+        sprite.color = new Color(1, 1, 1, 0);
     }
 
     private void OnTriggerStay2D(Collider2D collision)
@@ -33,11 +30,11 @@ public class TutorialText : MonoBehaviour
             playerDistance = Vector2.Distance(gameObject.transform.position, playerTransform.position);
 
             if (playerDistance < MIN_DIST)
-                text.color = new Color(color, color, color, 1);
+                sprite.color = new Color(1, 1, 1, 1);
             else
             {
-                textAlpha = (REF_DIST - playerDistance) / 10.0f;
-                text.color = new Color(color, color, color, textAlpha);
+                spriteAlpha = (REF_DIST - playerDistance) / 10.0f;
+                sprite.color = new Color(1, 1, 1, spriteAlpha);
             }
         }
     }

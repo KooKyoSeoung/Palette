@@ -11,7 +11,7 @@ public class TestPlayer : MonoBehaviour
     private KeyCode jumpKey = KeyCode.Space;
 
     private float moveSpeed = 6.0f;
-    private float jumpPower = 12.0f;
+    private float jumpPower = 20.0f;
     private float horizontalMovement = 0.0f;
 
     void Awake()
