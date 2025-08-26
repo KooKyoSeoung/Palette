@@ -26,6 +26,8 @@ public class TutorialScene : MonoBehaviour
         tutorialCamera.RightEndSize = rightEndTransform[0].position.x;
         answeredIndex = 0;
 
+        Manager.Sound.PlayBGM("Tutorial");
+
         player = GameObject.FindWithTag("Player");
     }
 

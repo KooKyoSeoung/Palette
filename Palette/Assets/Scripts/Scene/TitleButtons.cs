@@ -7,7 +7,7 @@ public class TitleButtons : MonoBehaviour
 {
     public void OnClickGameStart()
     {
-
+        LoadingScene.LoadScene("TutorialScene");
     }
 
     public void OnClickOption()
