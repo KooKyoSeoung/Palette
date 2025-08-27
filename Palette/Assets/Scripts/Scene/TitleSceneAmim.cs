@@ -17,6 +17,8 @@ public class TitleSceneAmim : MonoBehaviour
 
     void Start()
     {
+        PlayerSelectData.InitData();
+
         fadeImage.color = blackColor;
 
         for (int i = 0; i < buttons.Length; i++)

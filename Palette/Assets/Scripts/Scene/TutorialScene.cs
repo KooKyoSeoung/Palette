@@ -9,6 +9,8 @@ public class TutorialScene : MonoBehaviour
     [SerializeField] private List<Transform> rightEndTransform = new List<Transform>();
     [SerializeField] private List<GameObject> walls = new List<GameObject>();
     [SerializeField] private List<GameObject> questions = new List<GameObject>();
+    [SerializeField] private GameObject firstPlayerInfoUI;
+    [SerializeField] private GameObject[] playerInfoUI = new GameObject[4];
 
     private TutorialCamera tutorialCamera;
 
@@ -25,6 +27,9 @@ public class TutorialScene : MonoBehaviour
         tutorialCamera = mainCamera.GetComponent<TutorialCamera>();
         tutorialCamera.RightEndSize = rightEndTransform[0].position.x;
         answeredIndex = 0;
+
+        Manager.canInput = false;
+        firstPlayerInfoUI.SetActive(true);
 
         Manager.Sound.PlayBGM("Tutorial");
 
@@ -55,6 +60,24 @@ public class TutorialScene : MonoBehaviour
         StopAllCoroutines();
     }
 
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        PlayerSelectData.SetPlayerName();
+
+        Manager.canInput = false;
+
+        int index = (int)PlayerSelectData.NAME - 1;
+
+        if (index >= 0 && index < playerInfoUI.Length)
+        {
+            playerInfoUI[index].SetActive(true);
+        }
+        else
+        {
+            Debug.LogError("Invalid PlayerName index: " + PlayerSelectData.NAME);
+        }
+    }
+
     public void SelectQuestion()
     {
         isSubStageTransition = true;
@@ -63,5 +86,22 @@ public class TutorialScene : MonoBehaviour
         tutorialCamera.RightEndSize = rightEndTransform[answeredIndex].position.x;
         questions[answeredIndex - 1].SetActive(false);
         walls[answeredIndex - 1].SetActive(false);
+    }
+
+    public void FirstUIClicked()
+    {
+        firstPlayerInfoUI.SetActive(false);
+
+        Manager.canInput = true;
+    }
+
+    public void PlayerUIClicked()
+    {
+        for (int i = 0; i < 4; i++)
+            playerInfoUI[i].SetActive(false);
+
+        Manager.canInput = true;
+
+        LoadingScene.LoadScene("MainScene");
     }
 }

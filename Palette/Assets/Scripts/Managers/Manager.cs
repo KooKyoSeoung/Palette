@@ -6,6 +6,8 @@ public class Manager : MonoBehaviour
 {
     [SerializeField] private SoundManager sound;
 
+    public static bool canInput = true;
+
     static Manager sInstance;
     static Manager Instance
     {
@@ -41,6 +43,7 @@ public class Manager : MonoBehaviour
 
     void Update()
     {
-        input.OnUpdate();
+        if (canInput)
+            input.OnUpdate();
     }
 }
