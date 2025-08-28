@@ -86,7 +86,14 @@ public class PlayerBullet : MonoBehaviour
         {
             if (ray.collider.tag == "Enemy")
             {
-                ray.collider.GetComponent<EnemyBoss>().OnDamage(attackPower);
+                if (PlayerRubi.isAtkAdvenced == true)
+                {
+                    ray.collider.GetComponent<EnemyBoss>().OnDamage(attackPower * 2);
+                }
+                else
+                {
+                    ray.collider.GetComponent<EnemyBoss>().OnDamage(attackPower);
+                }
                 StartCoroutine(bulletDestroyCoroutine);
             }
         }

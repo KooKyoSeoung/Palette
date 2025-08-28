@@ -4,21 +4,28 @@ using UnityEngine;
 
 public class Player : MonoBehaviour
 {
+    [SerializeField] protected GameObject playerVFX;
     protected GameObject bulletPrefab;
     protected GameObject bulletPool;
 
     protected Rigidbody2D rigidbody;
     protected PlayerHealthUI healthUI;
     protected SpriteRenderer spriterenderer;
+    protected int UIId;
 
     private KeyCode keyLeft = KeyCode.LeftArrow;
     private KeyCode keyRight = KeyCode.RightArrow;
     private KeyCode keyJump = KeyCode.Space;
     private KeyCode keyAtk = KeyCode.Z;
+    protected KeyCode keySkill = KeyCode.X;
 
-    protected float curTime;
+    protected float curTime = 0;
     protected float coolTime = 0.3f;
 
+    protected float curSkillTime = 0;
+    protected float coolSkillTime;
+
+    protected int maxHealth = 3;
     protected int health = 3;
     protected float moveSpeed = 6.0f;
     protected float jumpPower = 15.0f;
@@ -80,22 +87,40 @@ public class Player : MonoBehaviour
         curTime -= Time.deltaTime;
     }
 
-    protected virtual void OnDamaged()
+    protected virtual void PlayerSkill()
+    {
+
+    }
+
+    protected void PlayerHeal(int value)
+    {
+        if (health + value > maxHealth)
+        {
+            // 피맥만큼 회복
+        }
+        else
+        {
+            // value만큼 회복
+        }
+    }
+
+    public void OnDamaged()
     {
         if (isInvincibleTime)
             return;
 
-        Manager.canInput = false;
         // 맞는 소리 출력
 
         if (health > 1)
         {
             health -= 1;
+            healthUI.DrawUI(UIId, health);
             StartCoroutine(Invincible(1.0f));
         }
         else
         {
             health -= 1;
+            healthUI.DrawUI(UIId, health);
             gameObject.SetActive(false);
             Destroy(gameObject);
             // 게임 오버 출력
@@ -107,7 +132,6 @@ public class Player : MonoBehaviour
         isInvincibleTime = true;
         StartCoroutine(BlinkEffect(invincibleTime, spriterenderer));
         yield return new WaitForSeconds(invincibleTime);
-        Manager.canInput = true;
         spriterenderer.color = new Color(1, 1, 1, 1);
         isInvincibleTime = false;
     }

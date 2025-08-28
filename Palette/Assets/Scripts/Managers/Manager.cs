@@ -7,9 +7,10 @@ public class Manager : MonoBehaviour
     [SerializeField] private SoundManager sound;
 
     public static bool canInput = true;
+    public GameObject player = null;
 
-    static Manager sInstance;
-    static Manager Instance
+    public static Manager sInstance; // public으로 두개 바꿈
+    public static Manager Instance
     {
         get
         {

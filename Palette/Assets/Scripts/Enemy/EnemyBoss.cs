@@ -1,24 +1,60 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
+using DG.Tweening;
 
 public class EnemyBoss : MonoBehaviour
 {
-    [SerializeField] private float attackInterval = 3.0f;
-    [SerializeField] private float stunDuration = 2.0f;
+    [SerializeField] private float attackInterval = 5.0f;
+    [SerializeField] private float stunDuration = 5.0f;
+    [SerializeField] private Slider healthUI;
 
-    public BossState currentState = BossState.Idle;
+    [Header ("Bullet")]
+    [SerializeField] private GameObject bulletPrefab;
+    [SerializeField] private float bulletSpeed = 8.0f;
+    [SerializeField] private Transform firePoint;
+
+    private Player player;
+    private Transform playerTransform;
+
+    private SpriteRenderer spriterenderer;
+    private Color originColor = new Color(1, 1, 1, 1);
+    private Color stunColor = new Color(0.5f, 0.5f, 0.5f, 1);
+
+    private BossState currentState = BossState.Idle;
 
     private Coroutine attackRoutine;
 
     private const float MAX_HEALTH = 100.0f;
     private float health;
-
+    private bool isNeedInit = true;
     
     void Start()
     {
+        spriterenderer = gameObject.GetComponent<SpriteRenderer>();
         health = MAX_HEALTH;
+        healthUI.value = MAX_HEALTH;
         ChangeState(BossState.Idle);
+    }
+
+    void Update()
+    {
+        if (isNeedInit && Manager.Instance.player != null)
+        {
+            isNeedInit = false;
+
+            player = Manager.Instance.player.GetComponent<Player>();
+            playerTransform = Manager.Instance.player.GetComponent<Transform>();
+        }
+    }
+
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (collision.gameObject.CompareTag("Player"))
+        {
+            player.OnDamaged();
+        }
     }
 
     private void ChangeState(BossState newState)
@@ -43,6 +79,7 @@ public class EnemyBoss : MonoBehaviour
                 break;
             case BossState.Dead:
                 Debug.Log("Dead");
+                gameObject.SetActive(false);
                 break;
         }
     }
@@ -64,18 +101,63 @@ public class EnemyBoss : MonoBehaviour
         switch (pattern)
         {
             case 0:
-                // 패턴 1
+                StartCoroutine(ShootThreeShot());
                 break;
             case 1:
-                // 패턴 2
+                StartCoroutine(ShootSpreadShot());
                 break;
         }
     }
 
+    private IEnumerator ShootThreeShot()
+    {
+        if (player == null) yield break;
+
+        transform.DOShakePosition(1f);
+        yield return new WaitForSeconds(1.5f);
+
+        for (int i = 0; i < 3; i++)
+        {
+            ShootAtPlayer();
+            yield return new WaitForSeconds(0.3f);
+        }
+    }
+
+    private void ShootAtPlayer()
+    {
+        Vector2 direction = (playerTransform.position - firePoint.position).normalized;
+        GameObject bullet = Instantiate(bulletPrefab, firePoint.position, Quaternion.identity);
+        bullet.GetComponent<Rigidbody2D>().velocity = direction * bulletSpeed;
+    }
+
+    private IEnumerator ShootSpreadShot()
+    {
+        if (player == null) yield break;
+
+        transform.DOShakePosition(1.5f);
+        yield return new WaitForSeconds(2f);
+
+        Vector2 playerPos = playerTransform.position;
+        Vector2 direction = (playerPos - (Vector2)transform.position).normalized;
+
+        Vector2 perpendicular = new Vector2(-direction.y, direction.x);
+
+        for (int i = -1; i <= 1; i++)
+        {
+            Vector2 modifiedDirection = (direction + perpendicular * 0.2f * i).normalized;
+
+            GameObject bullet = Instantiate(bulletPrefab, transform.position, Quaternion.identity);
+            bullet.GetComponent<Rigidbody2D>().velocity = modifiedDirection * bulletSpeed;
+        }
+
+        yield return null;
+    }
+
     private IEnumerator StunRoutine()
     {
-        Debug.Log("Boss Stun!!");
+        spriterenderer.color = stunColor;
         yield return new WaitForSeconds(stunDuration);
+        spriterenderer.color = originColor;
         ChangeState(BossState.Idle);
     }
 
@@ -93,7 +175,7 @@ public class EnemyBoss : MonoBehaviour
             return;
 
         health -= damage;
-        // 여기에 HP UI 연동한거 작성
+        healthUI.value = health;
 
         if (health <= 0)
         {
