@@ -86,7 +86,7 @@ public class PlayerBullet : MonoBehaviour
         {
             if (ray.collider.tag == "Enemy")
             {
-                // 여기에 피해 공식 기입
+                ray.collider.GetComponent<EnemyBoss>().OnDamage(attackPower);
                 StartCoroutine(bulletDestroyCoroutine);
             }
         }
