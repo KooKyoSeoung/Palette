@@ -21,8 +21,10 @@ public class Manager : MonoBehaviour
 
     public static InputManager Input { get { return Instance.input; } }
     public static SoundManager Sound { get { return Instance.sound; } }
+    public static PoolManager Pool { get { return Instance.pool; } }
 
     InputManager input = new InputManager();
+    PoolManager pool = new PoolManager();
 
     static void Init()
     {
@@ -38,7 +40,14 @@ public class Manager : MonoBehaviour
 
             DontDestroyOnLoad(go);
             sInstance = go.GetComponent<Manager>();
+
+            sInstance.pool.Init();
         }
+    }
+
+    public static void Clear()
+    {
+        Pool.Clear();
     }
 
     void Update()

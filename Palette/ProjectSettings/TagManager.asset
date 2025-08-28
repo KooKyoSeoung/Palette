@@ -5,11 +5,14 @@ TagManager:
   serializedVersion: 2
   tags:
   - Manager
+  - Ground
+  - Enemy
+  - Pool
   layers:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - 
+  - Enemy
   - Water
   - UI
   - 

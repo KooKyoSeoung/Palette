@@ -14,6 +14,8 @@ public class TestPlayer : MonoBehaviour
     private float jumpPower = 20.0f;
     private float horizontalMovement = 0.0f;
 
+    private bool isGrounded = true;
+
     void Awake()
     {
         rigidbody = GetComponent<Rigidbody2D>();
@@ -53,9 +55,19 @@ public class TestPlayer : MonoBehaviour
 
     private void PlayerJump()
     {
-        if (Input.GetKeyDown(jumpKey))
+        if (Input.GetKeyDown(jumpKey) && isGrounded)
         {
+            isGrounded = false;
+
             rigidbody.AddForce(new Vector3(0, jumpPower, 0), ForceMode2D.Impulse);
+        }
+    }
+
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (collision.gameObject.CompareTag("Ground"))
+        {
+            isGrounded = true;
         }
     }
 }
