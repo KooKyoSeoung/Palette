@@ -90,6 +90,8 @@ public class TutorialScene : MonoBehaviour
 
     public void FirstUIClicked()
     {
+        Manager.Sound.PlaySFX("UIClick");
+
         firstPlayerInfoUI.SetActive(false);
 
         Manager.canInput = true;
@@ -97,6 +99,8 @@ public class TutorialScene : MonoBehaviour
 
     public void PlayerUIClicked()
     {
+        Manager.Sound.PlaySFX("UIClick");
+
         for (int i = 0; i < 4; i++)
             playerInfoUI[i].SetActive(false);
 

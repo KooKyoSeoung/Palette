@@ -66,6 +66,8 @@ public class Player : MonoBehaviour
     {
         if (Input.GetKeyDown(keyJump) && isGrounded)
         {
+            Manager.Sound.PlaySFX("PlayerJump");
+
             isGrounded = false;
 
             rigidbody.AddForce(new Vector3(0, jumpPower, 0), ForceMode2D.Impulse);
@@ -105,12 +107,18 @@ public class Player : MonoBehaviour
         healthUI.DrawUI(UIId, health);
     }
 
+    protected void CheatHeal() // 치트
+    {
+        if (Input.GetKeyDown(KeyCode.Tab))
+            PlayerHeal(1);
+    }
+
     public void OnDamaged()
     {
         if (isInvincibleTime)
             return;
 
-        // 맞는 소리 출력
+        Manager.Sound.PlaySFX("PlayerHit");
 
         if (health > 1)
         {
@@ -122,10 +130,18 @@ public class Player : MonoBehaviour
         {
             health -= 1;
             healthUI.DrawUI(UIId, health);
-            gameObject.SetActive(false);
-            Destroy(gameObject);
-            // 게임 오버 출력
+            OnPlayerDead();
         }
+    }
+
+    private void OnPlayerDead()
+    {
+        GameObject[] bullets = GameObject.FindGameObjectsWithTag("PlayerBullet");
+        foreach (var bullet in bullets)
+            Manager.Pool.Push(Utils.GetOrAddComponent<Poolable>(bullet));
+
+        gameObject.SetActive(false);
+        Destroy(gameObject);
     }
 
     private IEnumerator Invincible(float invincibleTime)

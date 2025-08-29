@@ -9,6 +9,8 @@ public class EnemyBoss : MonoBehaviour
     [SerializeField] private float attackInterval = 5.0f;
     [SerializeField] private float stunDuration = 5.0f;
     [SerializeField] private Slider healthUI;
+    [SerializeField] private GameObject weakPoint;
+    [SerializeField] private MainScene mainScene;
 
     [Header ("Bullet")]
     [SerializeField] private GameObject bulletPrefab;
@@ -33,9 +35,10 @@ public class EnemyBoss : MonoBehaviour
     void Start()
     {
         spriterenderer = gameObject.GetComponent<SpriteRenderer>();
+        weakPoint.SetActive(false);
         health = MAX_HEALTH;
         healthUI.value = MAX_HEALTH;
-        ChangeState(BossState.Idle);
+        //ChangeState(BossState.Idle);
     }
 
     void Update()
@@ -78,8 +81,11 @@ public class EnemyBoss : MonoBehaviour
                 StartCoroutine(StunRoutine());
                 break;
             case BossState.Dead:
-                Debug.Log("Dead");
+                mainScene.BossDeadCall();
+                healthUI.gameObject.SetActive(false);
                 gameObject.SetActive(false);
+                break;
+            case BossState.Stoped:
                 break;
         }
     }
@@ -169,6 +175,16 @@ public class EnemyBoss : MonoBehaviour
         }
     }
 
+    public void ChangeToStoped()
+    {
+        ChangeState(BossState.Stoped);
+    }
+
+    public void ChangeToIdle()
+    {
+        ChangeState(BossState.Idle);
+    }
+
     public void OnDamage(float damage)
     {
         if (currentState == BossState.Dead) 
@@ -184,6 +200,19 @@ public class EnemyBoss : MonoBehaviour
             return;
         }
     }
+
+    public void ShowWeakPoint()
+    {
+        if (weakPoint.activeSelf == false)
+            StartCoroutine(ShowWeakPointCoroutine());
+    }
+
+    private IEnumerator ShowWeakPointCoroutine(float time = 7.0f)
+    {
+        weakPoint.SetActive(true);
+        yield return new WaitForSeconds(time);
+        weakPoint.SetActive(false);
+    }
 }
 
 public enum BossState
@@ -191,5 +220,6 @@ public enum BossState
     Idle,
     Attack,
     Stunned,
-    Dead
+    Dead,
+    Stoped
 }

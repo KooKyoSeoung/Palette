@@ -1,11 +1,11 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using TMPro;
-using DG.Tweening;
 using UnityEngine.UI;
+using DG.Tweening;
+using UnityEngine.SceneManagement;
 
-public class OpeningScene : MonoBehaviour
+public class EndingScene : MonoBehaviour
 {
     [SerializeField] private GameObject nextStageBtn;
     [SerializeField] private RectTransform creditList;
@@ -54,9 +54,10 @@ public class OpeningScene : MonoBehaviour
         nextStageBtnImg.DOColor(originColor, 1.0f);
     }
 
-    public void OnClickStartBtn()
+    public void OnClickContinueBtn()
     {
         Manager.Sound.PlaySFX("UIClick");
-        LoadingScene.LoadScene("TutorialScene");
+
+        SceneManager.LoadScene("TitleScene");
     }
 }

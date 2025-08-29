@@ -31,7 +31,7 @@ public class TutorialCamera : MonoBehaviour
 
     void FixedUpdate()
     {
-        if (!isSubStageMove)
+        if (!isSubStageMove && playerTransform != null)
             CameraMovement();
     }
 

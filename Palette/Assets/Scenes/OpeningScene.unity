@@ -729,7 +729,7 @@ MonoBehaviour:
   creditList: {fileID: 1256077428}
   creditStartY: 0
   creditEndY: 1460
-  creditSpeed: 30
+  creditSpeed: 50
   delayTime: 1.5
 --- !u!1 &1483212827
 GameObject:

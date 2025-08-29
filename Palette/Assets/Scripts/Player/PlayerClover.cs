@@ -36,7 +36,12 @@ public class PlayerClover : Player
         Manager.Input.keyAction -= PlayerMove;
         Manager.Input.keyAction -= PlayerJump;
         Manager.Input.keyAction -= PlayerAttack;
-        Manager.Input.keyAction += PlayerSkill;
+        Manager.Input.keyAction -= PlayerSkill;
+    }
+
+    void Update()
+    {
+        CheatHeal();
     }
 
     protected override void PlayerSkill()
@@ -56,9 +61,10 @@ public class PlayerClover : Player
 
     private IEnumerator HealPlayer()
     {
+        Manager.Sound.PlaySFX("SkillClover");
         playerVFX.SetActive(true);
         PlayerHeal(1);
-        yield return new WaitForSeconds(2f);
+        yield return new WaitForSeconds(2.0f);
         playerVFX.SetActive(false);
     }
 }

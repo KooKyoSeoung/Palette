@@ -20,7 +20,7 @@ public class PlayerBullet : MonoBehaviour
     {
         SetBullet();
 
-        // ½î´Â »ç¿îµå »ðÀÔ
+        Manager.Sound.PlaySFX("PlayerAtk");
     }
 
     void Update()
@@ -94,6 +94,12 @@ public class PlayerBullet : MonoBehaviour
                 {
                     ray.collider.GetComponent<EnemyBoss>().OnDamage(attackPower);
                 }
+                StartCoroutine(bulletDestroyCoroutine);
+            }
+
+            if (ray.collider.tag == "WeakPoint")
+            {
+                ray.collider.GetComponentInParent<EnemyBoss>().OnDamage(attackPower * 2);
                 StartCoroutine(bulletDestroyCoroutine);
             }
         }

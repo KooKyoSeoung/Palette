@@ -42,6 +42,11 @@ public class PlayerPurum : Player
         Manager.Input.keyAction -= PlayerSkill;
     }
 
+    void Update()
+    {
+        CheatHeal();
+    }
+
     protected override void PlayerSkill()
     {
         base.PlayerSkill();
@@ -59,9 +64,10 @@ public class PlayerPurum : Player
 
     private IEnumerator StunBoss()
     {
+        Manager.Sound.PlaySFX("SkillPurum");
         playerVFX.SetActive(true);
         boss.ApplyStun();
-        yield return new WaitForSeconds(5f);
+        yield return new WaitForSeconds(5.0f);
         playerVFX.SetActive(false);
     }
 }

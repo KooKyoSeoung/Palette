@@ -10,6 +10,7 @@ public class PlayerRubi : Player
     {
         UIId = 0;
         coolSkillTime = 30.0f;
+        isAtkAdvenced = false;
 
         GameObject playerUI = GameObject.Find("PlayerUI");
         healthUI = playerUI.GetComponent<PlayerHealthUI>();
@@ -39,6 +40,11 @@ public class PlayerRubi : Player
         Manager.Input.keyAction -= PlayerSkill;
     }
 
+    void Update()
+    {
+        CheatHeal();
+    }
+
     protected override void PlayerSkill()
     {
         base.PlayerSkill();
@@ -56,9 +62,10 @@ public class PlayerRubi : Player
 
     private IEnumerator AdvenceAtk()
     {
+        Manager.Sound.PlaySFX("SkillRubi");
         isAtkAdvenced = true;
         playerVFX.SetActive(true);
-        yield return new WaitForSeconds(5f);
+        yield return new WaitForSeconds(5.0f);
         playerVFX.SetActive(false);
         isAtkAdvenced = false;
     }

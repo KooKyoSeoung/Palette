@@ -8,6 +8,8 @@ TagManager:
   - Ground
   - Enemy
   - Pool
+  - WeakPoint
+  - PlayerBullet
   layers:
   - Default
   - TransparentFX

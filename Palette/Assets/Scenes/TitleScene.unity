@@ -308,7 +308,27 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c70af967cf814114f8d4b3bdb80c8dbd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  arraySFX: []
+  arraySFX:
+  - name: GameStart
+    clip: {fileID: 8300000, guid: 8e0059cff9579c6479c9c28d79a092d9, type: 3}
+  - name: GameOver
+    clip: {fileID: 8300000, guid: 5babc8dfd06750d41b46f22bf7c3439d, type: 3}
+  - name: UIClick
+    clip: {fileID: 8300000, guid: 13183e05600ec064f81bcdae13ad7960, type: 3}
+  - name: SkillRubi
+    clip: {fileID: 8300000, guid: 9128f7c921f4f924aad0124d36955cfd, type: 3}
+  - name: SkillPurum
+    clip: {fileID: 8300000, guid: 5bb1517e2d7c22c439de1d37f5300e27, type: 3}
+  - name: SkillThunder
+    clip: {fileID: 8300000, guid: c6f8c8948eb26224eafec5bf8ceaf1c3, type: 3}
+  - name: SkillClover
+    clip: {fileID: 8300000, guid: ba279f17225833e4b98f58d056867a71, type: 3}
+  - name: PlayerJump
+    clip: {fileID: 8300000, guid: 840eac596e2952542b4446ff2256945d, type: 3}
+  - name: PlayerHit
+    clip: {fileID: 8300000, guid: 1ac54e4f4ed8b22408715d24d0e6581d, type: 3}
+  - name: PlayerAtk
+    clip: {fileID: 8300000, guid: 28674dfb739bf3041983b13d32162e98, type: 3}
   arrayBGM:
   - name: Title
     clip: {fileID: 8300000, guid: c80ca77ca839a9a44b3d5c1d5eb5248e, type: 3}
@@ -322,8 +342,8 @@ MonoBehaviour:
   - {fileID: 364183665}
   - {fileID: 903907730}
   typeWritePlayer: {fileID: 1063238388}
-  bgmVolume: 1
-  sfxVolume: 0.6
+  bgmVolume: 0.3
+  sfxVolume: 1.5
 --- !u!1 &364183663
 GameObject:
   m_ObjectHideFlags: 0
@@ -1482,6 +1502,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   sound: {fileID: 286002852}
+  player: {fileID: 0}
 --- !u!1 &1846130920
 GameObject:
   m_ObjectHideFlags: 0
