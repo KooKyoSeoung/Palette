@@ -8,7 +8,7 @@ public class TestPlayer : MonoBehaviour
 
     private KeyCode moveLeftKey = KeyCode.LeftArrow;
     private KeyCode moveRightKey = KeyCode.RightArrow;
-    private KeyCode jumpKey = KeyCode.Space;
+    private KeyCode jumpKey = KeyCode.UpArrow;
 
     private float moveSpeed = 6.0f;
     private float jumpPower = 20.0f;
@@ -25,6 +25,15 @@ public class TestPlayer : MonoBehaviour
     {
         Manager.Input.keyAction += PlayerMove;
         Manager.Input.keyAction += PlayerJump;
+    }
+
+    void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.F1))
+            moveSpeed += 3.0f;
+
+        if (Input.GetKeyDown(KeyCode.F2))
+            moveSpeed = 6.0f;
     }
 
     void OnDisable()

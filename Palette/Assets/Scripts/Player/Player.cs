@@ -15,7 +15,7 @@ public class Player : MonoBehaviour
 
     private KeyCode keyLeft = KeyCode.LeftArrow;
     private KeyCode keyRight = KeyCode.RightArrow;
-    private KeyCode keyJump = KeyCode.Space;
+    private KeyCode keyJump = KeyCode.UpArrow;
     private KeyCode keyAtk = KeyCode.Z;
     protected KeyCode keySkill = KeyCode.X;
 

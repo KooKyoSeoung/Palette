@@ -99,7 +99,7 @@ public class PlayerBullet : MonoBehaviour
 
             if (ray.collider.tag == "WeakPoint")
             {
-                ray.collider.GetComponentInParent<EnemyBoss>().OnDamage(attackPower * 2);
+                ray.collider.GetComponentInParent<EnemyBoss>().OnDamage(attackPower * 3);
                 StartCoroutine(bulletDestroyCoroutine);
             }
         }
