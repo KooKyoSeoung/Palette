@@ -96,12 +96,13 @@ public class Player : MonoBehaviour
     {
         if (health + value > maxHealth)
         {
-            // 피맥만큼 회복
+            health = maxHealth;
         }
         else
         {
-            // value만큼 회복
+            health += value;
         }
+        healthUI.DrawUI(UIId, health);
     }
 
     public void OnDamaged()
